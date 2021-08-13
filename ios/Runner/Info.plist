@@ -41,5 +41,29 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Permiso para descargar imagenes a la galería</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Este permiso no es necesitado en la app, pero es requerido por una API subyacente. Si miras este dialogo, contactanos.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Este permiso no es necesitado en la app, pero es requerido por una API subyacente. Si miras este dialogo, contactanos.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Este permiso no es necesitado en la app, pero es requerido por una API subyacente. Si miras este dialogo, contactanos.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Este permiso no es necesitado en la app, pero es requerido por una API subyacente. Si miras este dialogo, contactanos.</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Este permiso no es necesitado en la app, pero es requerido por una API subyacente. Si miras este dialogo, contactanos.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Este permiso no es necesitado en la app, pero es requerido por una API subyacente. Si miras este dialogo, contactanos.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Este permiso no es necesitado en la app, pero es requerido por una API subyacente. Si miras este dialogo, contactanos.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Este permiso no es necesitado en la app, pero es requerido por una API subyacente. Si miras este dialogo, contactanos.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Este permiso no es necesitado en la app, pero es requerido por una API subyacente. Si miras este dialogo, contactanos.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Este permiso no es necesitado en la app, pero es requerido por una API subyacente. Si miras este dialogo, contactanos.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Este permiso no es necesitado en la app, pero es requerido por una API subyacente. Si miras este dialogo, contactanos.</string>
 </dict>
 </plist>
