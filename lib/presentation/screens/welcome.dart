@@ -18,7 +18,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       body: OnBoardingSlider(
         headerBackgroundColor: Colors.white,
         controllerColor: primary,
-        buttonText: 'Registrarse',
+        buttonText: 'Registrarme',
         skipTextButton: const Text('Saltar'),
         finishButton: const Text('Iniciar sesión'),
         background: [
