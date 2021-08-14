@@ -1,3 +1,6 @@
+import 'package:ez_parking_app/domain/use_cases/auth/get_on_boarding.dart';
+import 'package:ez_parking_app/domain/use_cases/auth/set_on_boarding.dart';
+import 'package:ez_parking_app/presentation/bloc/auth/welcome/welcome_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:ez_parking_app/data/datasources/auth/auth_local_datasource.dart';
 import 'package:ez_parking_app/data/datasources/auth/auth_remote_datasource.dart';
@@ -23,9 +26,12 @@ import 'package:ez_parking_app/presentation/bloc/auth/login/login_cubit.dart';
 void initAuthDependencies(GetIt sl) {
   sl
     // BLoCs
+    ..registerFactory(() => WelcomeCubit(setOnBoarding: sl()))
     ..registerFactory(() => LoginCubit(loginWithEmailAndPassword: sl()))
     // use cases
     ..registerLazySingleton(() => LoginWithEmailAndPassword(sl()))
+    ..registerLazySingleton(() => SetOnBoarding(sl()))
+    ..registerLazySingleton(() => GetOnBoarding(sl()))
     // Repository
     ..registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(
           remoteDataSource: sl(),
@@ -34,5 +40,6 @@ void initAuthDependencies(GetIt sl) {
         ))
     // Data sources
     ..registerLazySingleton<AuthRemoteDataSource>(() => AuthRemoteDataSourceImpl(client: sl()))
-    ..registerLazySingleton<AuthLocalDataSource>(() => AuthLocalDataSourceImpl(secureStorage: sl()));
+    ..registerLazySingleton<AuthLocalDataSource>(
+        () => AuthLocalDataSourceImpl(secureStorage: sl(), sharedPreferences: sl()));
 }

@@ -4,6 +4,10 @@ import 'package:ez_parking_app/core/errors/failure.dart';
 import 'package:ez_parking_app/domain/entities/auth/user_session.dart';
 
 abstract class AuthRepository {
+  // Setea el valor de onBoarding
+  Future<void> setOnBoading();
+  // Regresa el valor de onBoarding
+  int getOnBoading();
   // Realiza un login con correo electronico y password
   Future<Either<Failure, UserSession>> logInWithEmailAndPassword({
     required String email,

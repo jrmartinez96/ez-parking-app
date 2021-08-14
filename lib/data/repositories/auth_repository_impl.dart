@@ -19,6 +19,16 @@ class AuthRepositoryImpl extends AuthRepository {
   final NetworkInfo networkInfo;
 
   @override
+  Future<void> setOnBoading() async {
+    await localDataSource.setOnBoarding();
+  }
+
+  @override
+  int getOnBoading() {
+    return localDataSource.getOnBoarding();
+  }
+
+  @override
   Future<Either<Failure, UserSession>> logInWithEmailAndPassword(
       {required String email, required String password}) async {
     if (await networkInfo.hasConnection) {
