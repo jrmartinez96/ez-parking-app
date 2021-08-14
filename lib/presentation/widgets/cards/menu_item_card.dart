@@ -70,45 +70,45 @@ class MenuItemCard extends StatelessWidget {
     }
 
     return RoundedCard(
-        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+        margin: const EdgeInsets.symmetric(
+          vertical: 10,
+        ),
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
         backgroundColor: backgroundColor,
         onPressed: onPressed,
-        child: Container(
-          child: Row(
-            children: [
-              imageItem,
-              Expanded(
-                child: Container(
-                  margin: const EdgeInsets.only(left: 15, right: 30),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText1!
-                            .copyWith(fontWeight: FontWeight.bold, fontSize: 15, color: textColor),
-                      ),
-                      Text(
-                        description,
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(color: textColor),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ),
+        child: Row(
+          children: [
+            imageItem,
+            Expanded(
+              child: Container(
+                margin: const EdgeInsets.only(left: 15, right: 30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1!
+                          .copyWith(fontWeight: FontWeight.bold, fontSize: 15, color: textColor),
+                    ),
+                    Text(
+                      description,
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(color: textColor),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
                 ),
               ),
-              Center(
-                child: Icon(
-                  Icons.arrow_forward_ios,
-                  color: arrowColor ?? primary,
-                ),
-              )
-            ],
-          ),
+            ),
+            Center(
+              child: Icon(
+                Icons.arrow_forward_ios,
+                color: arrowColor ?? primary,
+              ),
+            )
+          ],
         ));
   }
 }

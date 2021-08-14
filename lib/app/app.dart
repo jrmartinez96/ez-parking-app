@@ -19,6 +19,7 @@ class App extends StatelessWidget {
     final eventBus = EventBus(sync: true);
     return MaterialApp(
       theme: ezParkingAppTheme(context),
+      // ignore: prefer_const_literals_to_create_immutables
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
       ],

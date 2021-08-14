@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class ForgotPasswordResponse extends Equatable {
-  ForgotPasswordResponse({
+  const ForgotPasswordResponse({
     required this.succeeded,
     this.error,
     this.data,

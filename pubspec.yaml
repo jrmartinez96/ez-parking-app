@@ -8,12 +8,12 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
+  bloc: ^7.0.0
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
   # Manejo de estados  
-  bloc: ^7.0.0
   flutter_bloc: ^7.1.0
   intl: ^0.17.0
   # Sirve para comparar varias instancias de un objeto
@@ -40,11 +40,13 @@ dependencies:
   image_gallery_saver: '^1.6.9'
   # Libreria para solicitar permisos al app
   permission_handler: ^8.1.4+2
+  # Libreria para OnBoarding
+  flutter_onboarding_slider: ^1.0.0
 
 dev_dependencies:
+  bloc_test: ^8.1.0
   flutter_test:
     sdk: flutter
-  bloc_test: ^8.1.0
   mocktail: ^0.1.0
   very_good_analysis: ^2.0.0
 

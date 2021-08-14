@@ -14,7 +14,7 @@ class LoginLoading extends LoginState {}
 class LoginLoaded extends LoginState {}
 
 class LoginError extends LoginState {
-  LoginError(this.message);
+  const LoginError(this.message);
 
   final String message;
 

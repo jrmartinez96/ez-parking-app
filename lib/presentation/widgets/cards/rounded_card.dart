@@ -8,7 +8,7 @@ class RoundedCard extends StatelessWidget {
       required this.child,
       this.borderRadius = 20,
       this.padding = const EdgeInsets.all(12),
-      this.margin = const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+      this.margin = const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       this.backgroundColor})
       : super(key: key);
 

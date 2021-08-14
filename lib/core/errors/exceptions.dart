@@ -1,28 +1,30 @@
 class AppException implements Exception {
-  AppException([
-    this._message,
-    this._code,
-  ]);
+  AppException({
+    required this.message,
+    required this.code,
+  });
 
   @override
   String toString() {
-    return '$_code: $_message';
+    return '$code: $message';
   }
 
   // ignore: prefer_typing_uninitialized_variables
-  final _code;
+  final int code;
   // ignore: prefer_typing_uninitialized_variables
-  final _message;
+  final String message;
 }
 
 class ServerException extends AppException {
   ServerException([
     String message = '',
     int code = 1,
-  ]) : super(message, code);
+  ]) : super(message: message, code: code);
 
-  String get message => _message;
-  int get code => _code;
+  @override
+  String get message;
+  @override
+  int get code;
 }
 
 class CacheException implements Exception {}
@@ -31,5 +33,5 @@ class UnauthorizedException extends AppException {
   UnauthorizedException([
     String message = 'Tu token ha expirado',
     int code = 401,
-  ]) : super(message, code);
+  ]) : super(message: message, code: code);
 }

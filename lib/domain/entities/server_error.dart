@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class ServerError extends Equatable {
-  ServerError({
+  const ServerError({
     required this.message,
   });
 

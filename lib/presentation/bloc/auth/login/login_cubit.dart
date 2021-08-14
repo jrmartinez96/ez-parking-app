@@ -12,7 +12,7 @@ class LoginCubit extends Cubit<LoginState> {
 
   final LoginWithEmailAndPassword loginWithEmailAndPassword;
 
-  void loginTemp({required String email, required String password}) async {
+  Future<void> loginTemp({required String email, required String password}) async {
     emit(LoginLoading());
     final failureOrUserSession = await loginWithEmailAndPassword(email: email, password: password);
     emit(_eitherLoadedOrErrorState(failureOrUserSession));

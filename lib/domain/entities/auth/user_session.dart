@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class UserSession extends Equatable {
-  UserSession({
+  const UserSession({
     required this.accesToken,
     required this.expires,
     required this.keyRecovery,

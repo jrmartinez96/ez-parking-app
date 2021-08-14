@@ -22,7 +22,7 @@ class TransactionsContainer extends StatelessWidget {
   }
 
   List<Widget> buildfields() {
-    var fieldsWidget = <Widget>[];
+    final fieldsWidget = <Widget>[];
     // ignore: avoid_function_literals_in_foreach_calls
     fields.forEach((field) => fieldsWidget.add(FieldsTransactions(title: field.title, value: field.value)));
     return fieldsWidget;

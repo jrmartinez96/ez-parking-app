@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:ez_parking_app/core/errors/exceptions.dart';
 
 abstract class Failure extends Equatable {
-  Failure({
+  const Failure({
     required this.message,
   });
 
@@ -14,9 +14,9 @@ abstract class Failure extends Equatable {
 
 // Failures generales de la app
 class ServerFailure extends Failure {
-  ServerFailure({
+  const ServerFailure({
     required this.code,
-    required message,
+    required String message,
   }) : super(message: message);
 
   factory ServerFailure.fromException(ServerException exception) => ServerFailure(
@@ -28,17 +28,17 @@ class ServerFailure extends Failure {
 }
 
 ServerFailure internetFailure() {
-  return ServerFailure(code: 0, message: 'Sin acceso a internet, por favor intenta mas tarde.');
+  return const ServerFailure(code: 0, message: 'Sin acceso a internet, por favor intenta mas tarde.');
 }
 
 class GeneralFailure extends Failure {
-  GeneralFailure({
-    message = 'Ha ocurrido un error inesperado',
+  const GeneralFailure({
+    String message = 'Ha ocurrido un error inesperado',
   }) : super(message: message);
 }
 
 class UnauthorizedFailure extends Failure {
-  UnauthorizedFailure({
-    message = 'Tu sesión ha terminado',
+  const UnauthorizedFailure({
+    String message = 'Tu sesión ha terminado',
   }) : super(message: message);
 }

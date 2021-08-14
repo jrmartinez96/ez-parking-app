@@ -12,7 +12,7 @@ import 'package:path/path.dart';
 import 'package:ez_parking_app/core/utils/utils.dart' as utils;
 
 class VoucherScreen extends StatefulWidget {
-  VoucherScreen({Key? key}) : super(key: key);
+  const VoucherScreen({Key? key}) : super(key: key);
 
   @override
   _VoucherScreenState createState() => _VoucherScreenState();
@@ -22,7 +22,7 @@ class _VoucherScreenState extends State<VoucherScreen> {
   // Screenshot controller
   final _screenshotController = ScreenshotController();
 
-  void onSave() async {
+  Future<void> onSave() async {
     // Construccion de path en donde se ira a guardar la imagen del comprobante
     final path =
         join((await getTemporaryDirectory()).path, '${DateTime.now()}.jpg').replaceAll(' ', '-').replaceAll(':', '');
@@ -44,6 +44,7 @@ class _VoucherScreenState extends State<VoucherScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: cast_nullable_to_non_nullable
     final args = ModalRoute.of(context)!.settings.arguments as VoucherScreenArgs;
 
     return Scaffold(
@@ -57,7 +58,7 @@ class _VoucherScreenState extends State<VoucherScreen> {
               textAlign: TextAlign.start,
             ),
           ),
-          Screenshot(
+          Screenshot<void>(
             controller: _screenshotController,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: HORIZONTAL_MARGIN),
@@ -85,7 +86,7 @@ class _VoucherScreenState extends State<VoucherScreen> {
 
   Widget _buildVoucherCard({required VoucherScreenArgs args}) {
     final dateString = voucherDateTime(args.dateTime);
-    var fieldsWidgets = <Widget>[];
+    final fieldsWidgets = <Widget>[];
 
     for (var i = 0; i < args.fields.length; i++) {
       final field = args.fields[i];
@@ -103,7 +104,6 @@ class _VoucherScreenState extends State<VoucherScreen> {
         children: [
           const SizedBox(height: 20),
           Align(
-            alignment: Alignment.center,
             child: Text(
               'COMPROBANTE',
               style: Theme.of(this.context).textTheme.headline3,
@@ -111,7 +111,6 @@ class _VoucherScreenState extends State<VoucherScreen> {
           ),
           const SizedBox(height: 20),
           Align(
-            alignment: Alignment.center,
             child: Text(
               dateString,
               style: Theme.of(this.context).textTheme.bodyText1!.copyWith(fontSize: 16, color: lightGreyColor),

@@ -1,10 +1,6 @@
-import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:ez_parking_app/constants/http_constants.dart';
 import 'package:ez_parking_app/core/errors/exceptions.dart';
-
-import 'package:ez_parking_app/data/models/auth/forgot_password_response_model.dart';
 import 'package:ez_parking_app/data/models/auth/user_session_model.dart';
 import 'package:ez_parking_app/data/models/server_error_model.dart';
 

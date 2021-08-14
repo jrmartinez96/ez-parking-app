@@ -13,8 +13,9 @@ import 'package:bloc/bloc.dart';
 import 'package:ez_parking_app/app/app.dart';
 import 'package:ez_parking_app/app/app_bloc_observer.dart';
 
-import 'dependency_injection/injection_container.dart' as di;
+import 'package:ez_parking_app/dependency_injection/injection_container.dart' as di;
 
+// ignore: avoid_void_async
 void main() async {
   Bloc.observer = AppBlocObserver();
   FlutterError.onError = (details) {

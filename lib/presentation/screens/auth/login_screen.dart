@@ -14,7 +14,7 @@ import 'package:ez_parking_app/presentation/widgets/primary_textfield.dart';
 import 'package:ez_parking_app/presentation/widgets/screen_header.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -74,7 +74,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 img: 'assets/images/unauthorized.png',
                 title: 'Lo sentimos...',
                 message: state.message,
-                button: 'Aceptar',
                 barrierDismissible: false,
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -99,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return Stack(
       children: [
-        !_isKeyboardVisible ? _buildBottom() : Container(),
+        if (!_isKeyboardVisible) _buildBottom() else Container(),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: HORIZONTAL_MARGIN),
           child: ListView(
@@ -128,8 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
             hintText: 'Correo electrónico',
             verticalMargin: 0,
             horizontalMargin: 0,
-            // TODO: Desactivar comentarios en la linea de abajo cuando se tengan usuarios con correo electronico
-            // customValidator: validateEmail,
+            customValidator: validateEmail,
           ),
           SizedBox(height: MediaQuery.of(context).size.height * 0.03),
           PrimaryTextfield(
@@ -174,7 +172,6 @@ class _LoginScreenState extends State<LoginScreen> {
           color: primary,
           borderRadius: BorderRadius.only(topRight: Radius.circular(30)),
         ),
-        child: null,
       ),
     );
   }

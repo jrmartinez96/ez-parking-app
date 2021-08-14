@@ -12,14 +12,14 @@ class CustomDialog extends StatelessWidget {
     return AlertDialog(
       contentPadding: EdgeInsets.zero,
       backgroundColor: Colors.transparent,
-      elevation: 0.0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+      elevation: 0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       content: _buildContent(context),
     );
   }
 
   Widget _buildContent(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: Stack(
         children: <Widget>[
@@ -55,22 +55,21 @@ class CustomDialog extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).dialogBackgroundColor,
-        shape: BoxShape.rectangle,
-        borderRadius: BorderRadius.circular(20.0),
-        boxShadow: [
-          const BoxShadow(
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: const [
+          BoxShadow(
             color: Colors.black26,
-            blurRadius: 10.0,
-            offset: Offset(0.0, 10.0),
+            blurRadius: 10,
+            offset: Offset(0, 10),
           ),
         ],
       ),
       child: Container(
         padding: EdgeInsets.only(
-          top: imageHeight + 16.0,
-          bottom: 14.0,
-          left: 14.0,
-          right: 14.0,
+          top: imageHeight + 16,
+          bottom: 14,
+          left: 14,
+          right: 14,
         ),
         child: child,
       ),

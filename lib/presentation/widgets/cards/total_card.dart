@@ -22,32 +22,33 @@ class TotalCard extends StatelessWidget {
       child: Column(
         children: [
           child,
-          total != null
-              ? Container(
-                  height: 50,
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  decoration: BoxDecoration(
-                    color: primary,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(borderRadius),
-                      bottomRight: Radius.circular(borderRadius),
-                    ),
+          if (total != null)
+            Container(
+              height: 50,
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                color: primary,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(borderRadius),
+                  bottomRight: Radius.circular(borderRadius),
+                ),
+              ),
+              child: Row(
+                children: [
+                  Text(
+                    'Total',
+                    style: Theme.of(context).textTheme.headline3!.copyWith(color: Colors.white),
                   ),
-                  child: Row(
-                    children: [
-                      Text(
-                        'Total',
-                        style: Theme.of(context).textTheme.headline3!.copyWith(color: Colors.white),
-                      ),
-                      Expanded(child: Container()),
-                      Text(
-                        'L${total!.toStringAsFixed(2)}',
-                        style: Theme.of(context).textTheme.headline3!.copyWith(color: Colors.white),
-                      ),
-                    ],
+                  Expanded(child: Container()),
+                  Text(
+                    'L${total!.toStringAsFixed(2)}',
+                    style: Theme.of(context).textTheme.headline3!.copyWith(color: Colors.white),
                   ),
-                )
-              : Container()
+                ],
+              ),
+            )
+          else
+            Container()
         ],
       ),
     );

@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:ez_parking_app/core/network/network_info.dart';
 
-import 'auth_dependencies.dart';
+import 'package:ez_parking_app/dependency_injection/auth_dependencies.dart';
 
 /// Instancia del service locator para acceder a GetIt
 final sl = GetIt.instance;

@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:ez_parking_app/core/framework/constants.dart';
 
 class PrimaryTextfield extends StatefulWidget {
-  PrimaryTextfield({
+  const PrimaryTextfield({
     Key? key,
     required this.controller,
     this.obscureText = false,

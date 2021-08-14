@@ -11,11 +11,11 @@ class LabelActive extends StatelessWidget {
         height: 23,
         width: 86,
         decoration: BoxDecoration(
-          color: (isActive) ? Colors.red : Colors.grey,
+          color: isActive ? Colors.red : Colors.grey,
           borderRadius: BorderRadius.circular(3),
         ),
         child: Text(
-          (isActive) ? 'Activa' : 'Inactiva',
+          isActive ? 'Activa' : 'Inactiva',
           textAlign: TextAlign.center,
           style: const TextStyle(
             color: Colors.white,

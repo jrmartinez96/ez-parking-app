@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ez_parking_app/core/framework/colors.dart';
 import 'package:ez_parking_app/core/framework/styles.dart';
 
+// ignore: prefer_function_declarations_over_variables
 final ezParkingAppTheme = (BuildContext context) => ThemeData(
       brightness: Brightness.light,
       primaryColor: primary,
@@ -33,29 +34,29 @@ final ezParkingAppTheme = (BuildContext context) => ThemeData(
       ),
       inputDecorationTheme: InputDecorationTheme(
         isCollapsed: true,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16),
         filled: true,
         fillColor: inputTextFillColor,
         border: const OutlineInputBorder(
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.all(
-            Radius.circular(10.0),
+            Radius.circular(10),
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
             color: greyColor,
           ),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
             color: Colors.red,
           ),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
             color: Colors.red,
           ),
