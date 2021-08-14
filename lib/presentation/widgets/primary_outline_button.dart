@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ez_parking_app/core/framework/colors.dart';
 
-class PrimaryButton extends StatelessWidget {
-  const PrimaryButton(
+class PrimaryOutlineButton extends StatelessWidget {
+  const PrimaryOutlineButton(
       {Key? key,
       this.onPressed,
       required this.title,
@@ -23,13 +23,15 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return OutlinedButton(
       onPressed: onPressed,
-      style: buttonStyle ??
-          ElevatedButton.styleFrom(
-              primary: color,
-              padding: const EdgeInsets.symmetric(vertical: 5),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+      style: OutlinedButton.styleFrom(
+        side: BorderSide(
+          color: color,
+        ),
+        padding: const EdgeInsets.symmetric(vertical: 5),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      ),
       child: Container(
         constraints: constraints,
         alignment: Alignment.center,

@@ -30,7 +30,7 @@ class LoginCubit extends Cubit<LoginState> {
   String _mapFailureToMessage(Failure failure) {
     switch (failure.runtimeType) {
       case ServerFailure:
-        return 'Ha ocurrido un error, por favor intenta nuevamente.';
+        return failure.message;
       default:
         return 'Unexpected error';
     }

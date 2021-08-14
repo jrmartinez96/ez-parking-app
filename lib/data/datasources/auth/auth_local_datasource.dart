@@ -18,7 +18,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
 
   @override
   Future<void> storeUserToken(UserSessionModel userSession) {
-    return secureStorage.write(key: 'USER_TOKEN', value: userSession.accesToken);
+    return secureStorage.write(key: 'USER_TOKEN', value: userSession.access);
   }
 
   @override

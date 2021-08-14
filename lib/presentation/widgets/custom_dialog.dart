@@ -27,8 +27,9 @@ class CustomDialog extends StatelessWidget {
           Positioned(
             left: 110,
             right: 110,
+            top: 10,
             child: Image(
-              height: MediaQuery.of(context).size.height * 0.13,
+              height: 75,
               image: AssetImage(image),
             ),
           ),
@@ -50,8 +51,6 @@ class CustomDialog extends StatelessWidget {
   }
 
   Widget _buildCard(BuildContext context) {
-    final imageHeight = (MediaQuery.of(context).size.height * 0.20) / 2;
-
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).dialogBackgroundColor,
@@ -65,8 +64,8 @@ class CustomDialog extends StatelessWidget {
         ],
       ),
       child: Container(
-        padding: EdgeInsets.only(
-          top: imageHeight + 16,
+        padding: const EdgeInsets.only(
+          top: 100,
           bottom: 14,
           left: 14,
           right: 14,
