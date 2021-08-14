@@ -15,7 +15,6 @@ import 'package:ez_parking_app/app/app.dart';
 import 'package:ez_parking_app/app/app_bloc_observer.dart';
 
 import 'package:ez_parking_app/dependency_injection/injection_container.dart' as di;
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:ez_parking_app/dependency_injection/injection_container.dart';
 
