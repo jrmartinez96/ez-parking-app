@@ -1,7 +1,10 @@
 import 'package:ez_parking_app/core/framework/constants.dart';
+import 'package:ez_parking_app/dependency_injection/injection_container.dart';
+import 'package:ez_parking_app/presentation/bloc/auth/welcome/welcome_cubit.dart';
 import 'package:ez_parking_app/presentation/widgets/screen_header.dart';
 import 'package:flutter/material.dart';
 import 'package:ez_parking_app/core/framework/colors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_onboarding_slider/flutter_onboarding_slider.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -14,29 +17,39 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: OnBoardingSlider(
-        headerBackgroundColor: Colors.white,
-        controllerColor: primary,
-        buttonText: 'Registrarse',
-        skipTextButton: const Text('Saltar'),
-        finishButton: const Text('Iniciar sesión'),
-        background: [
-          Container(),
-          Container(),
-          Container(),
-          Container(),
-        ],
-        totalPage: 4,
-        speed: 1.8,
-        bodyHeight: 650,
-        bodyWidth: 500,
-        pageBodies: _buildOnBoardingSteps(),
-        onFinish: (dynamic settings) {
-          Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
-        },
-        onPageFinish: (dynamic settings) {
-          Navigator.of(context).pushNamedAndRemoveUntil('/register', (route) => false);
+    return BlocProvider(
+      create: (_) => sl<WelcomeCubit>(),
+      child: BlocConsumer<WelcomeCubit, WelcomeState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          return Scaffold(
+            body: OnBoardingSlider(
+              headerBackgroundColor: Colors.white,
+              controllerColor: primary,
+              buttonText: 'Registrarme',
+              skipTextButton: const Text('Saltar'),
+              finishButton: const Text('Iniciar sesión'),
+              background: [
+                Container(),
+                Container(),
+                Container(),
+                Container(),
+              ],
+              totalPage: 4,
+              speed: 1.8,
+              bodyHeight: 650,
+              bodyWidth: 500,
+              pageBodies: _buildOnBoardingSteps(),
+              onFinish: (dynamic settings) {
+                context.read<WelcomeCubit>().setOnBoarding();
+                Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
+              },
+              onPageFinish: (dynamic settings) {
+                context.read<WelcomeCubit>().setOnBoarding();
+                Navigator.of(context).pushNamedAndRemoveUntil('/register', (route) => false);
+              },
+            ),
+          );
         },
       ),
     );

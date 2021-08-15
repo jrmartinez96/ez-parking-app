@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:ez_parking_app/presentation/widgets/primary_outline_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -62,28 +63,34 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocProvider(
-        create: (_) => sl<LoginCubit>(),
-        child: BlocConsumer<LoginCubit, LoginState>(
-          listener: (context, state) {
-            if (state is LoginLoaded) {
-              Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
-            } else if (state is LoginError) {
-              utils.showCustomAlert(
-                context,
-                img: 'assets/images/unauthorized.png',
-                title: 'Lo sentimos...',
-                message: state.message,
-                barrierDismissible: false,
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  context.read<LoginCubit>().returnToInitial();
-                },
-              );
-            }
-          },
-          builder: _buildForm,
-        ),
+        body: GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+      child: _buildBody(),
+    ));
+  }
+
+  Widget _buildBody() {
+    return BlocProvider(
+      create: (_) => sl<LoginCubit>(),
+      child: BlocConsumer<LoginCubit, LoginState>(
+        listener: (context, state) {
+          if (state is LoginLoaded) {
+            Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
+          } else if (state is LoginError) {
+            utils.showCustomAlert(
+              context,
+              img: 'assets/images/unauthorized.png',
+              title: 'Lo sentimos...',
+              message: state.message,
+              barrierDismissible: false,
+              onPressed: () {
+                Navigator.of(context).pop();
+                context.read<LoginCubit>().returnToInitial();
+              },
+            );
+          }
+        },
+        builder: _buildForm,
       ),
     );
   }
@@ -125,6 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
           PrimaryTextfield(
             controller: emailController,
             hintText: 'Correo electrónico',
+            keyboardType: TextInputType.emailAddress,
             verticalMargin: 0,
             horizontalMargin: 0,
             customValidator: validateEmail,
@@ -141,6 +149,12 @@ class _LoginScreenState extends State<LoginScreen> {
           _buildSignInButton(),
           SizedBox(height: MediaQuery.of(context).size.height * 0.1),
           PrimaryButton(onPressed: () => _onLogin(context), title: 'Iniciar Sesión'),
+          const SizedBox(height: 10),
+          PrimaryOutlineButton(
+            onPressed: () => Navigator.of(context).pushNamed('/register'),
+            title: 'Registrarme',
+            textColor: primary,
+          ),
           const SizedBox(height: 20),
         ],
       ),
@@ -151,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Container(
       alignment: Alignment.centerRight,
       child: TextButton(
-        onPressed: () => Navigator.pushNamed(context, '/forgot_password'),
+        onPressed: () {},
         child: Text(
           '¿Olvidaste tu contraseña? Recuperar.',
           style: Theme.of(context).textTheme.bodyText2,
@@ -167,10 +181,9 @@ class _LoginScreenState extends State<LoginScreen> {
       left: 0,
       child: Container(
         alignment: Alignment.center,
-        height: MediaQuery.of(context).size.height * 0.2,
+        height: MediaQuery.of(context).size.height * 0.15,
         decoration: const BoxDecoration(
           color: primary,
-          borderRadius: BorderRadius.only(topRight: Radius.circular(30)),
         ),
       ),
     );

@@ -12,18 +12,21 @@ import 'package:ez_parking_app/router/routing.dart';
 import 'package:event_bus/event_bus.dart';
 
 class App extends StatelessWidget {
-  const App({Key? key}) : super(key: key);
+  const App({Key? key, required this.onBoarding}) : super(key: key);
+
+  final int onBoarding;
 
   @override
   Widget build(BuildContext context) {
     final eventBus = EventBus(sync: true);
+    final initialRoute = onBoarding == 1 ? '/login' : '/welcome';
     return MaterialApp(
       theme: ezParkingAppTheme(context),
       // ignore: prefer_const_literals_to_create_immutables
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
       ],
-      initialRoute: '/welcome',
+      initialRoute: initialRoute,
       routes: getApplicationRoutes(eventBus),
     );
   }
