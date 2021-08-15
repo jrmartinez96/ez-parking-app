@@ -132,6 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
           PrimaryTextfield(
             controller: emailController,
             hintText: 'Correo electrónico',
+            keyboardType: TextInputType.emailAddress,
             verticalMargin: 0,
             horizontalMargin: 0,
             customValidator: validateEmail,

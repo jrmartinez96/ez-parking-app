@@ -1,1 +1,1 @@
-const urlEndpoint = 'http://127.0.0.1:8000/api';
+const urlEndpoint = 'http://10.203.1.139:8000/api';

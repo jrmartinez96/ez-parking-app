@@ -75,12 +75,13 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       {required String email, required String name, required String lastname, required String password}) async {
     final body = {
       'email': email,
+      'username': email,
       'name': name,
       'lastName': lastname,
       'password': password,
     };
 
-    final response = await _post(url: '$urlEndpoint/auth/register/', body: body);
+    final response = await _post(url: '$urlEndpoint/auth/register', body: body);
 
     if (response.statusCode == 200) {
       try {

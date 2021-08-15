@@ -47,8 +47,17 @@ class AuthRepositoryImpl extends AuthRepository {
 
   @override
   Future<Either<Failure, SignupSuccess>> signup(
-      {required String email, required String name, required String lastname, required String password}) {
-    // TODO: implement signup
-    throw UnimplementedError();
+      {required String email, required String name, required String lastname, required String password}) async {
+    if (await networkInfo.hasConnection) {
+      try {
+        final signupSuccess =
+            await remoteDataSource.signup(email: email, name: name, lastname: lastname, password: password);
+        return Right(signupSuccess);
+      } on ServerException catch (serverException) {
+        return Left(ServerFailure(code: serverException.code, message: serverException.message));
+      }
+    } else {
+      return Left(internetFailure());
+    }
   }
 }
