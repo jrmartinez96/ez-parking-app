@@ -153,6 +153,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       const SizedBox(height: 10),
       PrimaryTextfield(
         controller: _emailController,
+        keyboardType: TextInputType.emailAddress,
         hintText: 'Correo',
         required: true,
         customValidator: validateEmail,
