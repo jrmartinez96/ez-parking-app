@@ -46,6 +46,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments;
     return BlocProvider(
       create: (_) => sl<SignupCubit>(),
       child: BlocConsumer<SignupCubit, SignupState>(
@@ -59,7 +60,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
               message: 'Tu cuenta ha sido creada con éxito.',
               barrierDismissible: false,
               onPressed: () {
-                Navigator.of(context).popUntil(ModalRoute.withName('/login'));
+                if (args == null) {
+                  Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
+                } else {
+                  Navigator.of(context).popUntil(ModalRoute.withName('/login'));
+                }
               },
             );
           } else if (state is SignupError) {
@@ -175,3 +180,5 @@ class _RegisterScreenState extends State<RegisterScreen> {
     ];
   }
 }
+
+class RegisterScreenArgs {}

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:ez_parking_app/presentation/screens/auth/register_screen.dart';
 import 'package:ez_parking_app/presentation/widgets/primary_outline_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -151,7 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
           PrimaryButton(onPressed: () => _onLogin(context), title: 'Iniciar Sesión'),
           const SizedBox(height: 10),
           PrimaryOutlineButton(
-            onPressed: () => Navigator.of(context).pushNamed('/register'),
+            onPressed: () => Navigator.of(context).pushNamed('/register', arguments: RegisterScreenArgs()),
             title: 'Registrarme',
             textColor: primary,
           ),
