@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:ez_parking_app/data/models/auth/reset_password_response_model.dart';
 import 'package:ez_parking_app/data/models/auth/signup_success_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:ez_parking_app/constants/http_constants.dart';
@@ -21,6 +22,8 @@ abstract class AuthRemoteDataSource {
     required String lastname,
     required String password,
   });
+  // Solicita un correo para reiniciar la contraseña
+  Future<ResetPasswordResponseModel> resetPassword({required String email});
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -86,6 +89,43 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     if (response.statusCode == 200) {
       try {
         return signupSuccessModelFromJson(utf8.decode(response.bodyBytes));
+      } catch (_, __) {
+        ServerErrorModel serverErrorModel;
+        try {
+          serverErrorModel = serverErrorModelFromJson(utf8.decode(response.bodyBytes));
+        } catch (_, __) {
+          throw ServerException(
+            'Intenta más tarde.',
+            response.statusCode,
+          );
+        }
+        throw ServerException(serverErrorModel.message);
+      }
+    } else {
+      ServerErrorModel serverErrorModel;
+      try {
+        serverErrorModel = serverErrorModelFromJson(utf8.decode(response.bodyBytes));
+      } on Exception catch (_, __) {
+        throw ServerException(
+          'Intenta más tarde.',
+          response.statusCode,
+        );
+      }
+      throw ServerException(
+        serverErrorModel.message,
+      );
+    }
+  }
+
+  @override
+  Future<ResetPasswordResponseModel> resetPassword({required String email}) async {
+    final body = {'email': email};
+
+    final response = await _post(url: '$urlEndpoint/auth/password_reset/', body: body);
+
+    if (response.statusCode == 200) {
+      try {
+        return resetPasswordResponseModelFromJson(utf8.decode(response.bodyBytes));
       } catch (_, __) {
         ServerErrorModel serverErrorModel;
         try {

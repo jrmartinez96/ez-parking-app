@@ -63,8 +63,16 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<Either<Failure, ResetPasswordResponse>> resetPassword({required String email}) {
-    // TODO: implement resetPassword
-    throw UnimplementedError();
+  Future<Either<Failure, ResetPasswordResponse>> resetPassword({required String email}) async {
+    if (await networkInfo.hasConnection) {
+      try {
+        final resetPasswordResponse = await remoteDataSource.resetPassword(email: email);
+        return Right(resetPasswordResponse);
+      } on ServerException catch (serverException) {
+        return Left(ServerFailure(code: serverException.code, message: serverException.message));
+      }
+    } else {
+      return Left(internetFailure());
+    }
   }
 }
