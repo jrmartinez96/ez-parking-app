@@ -1,6 +1,8 @@
 import 'package:ez_parking_app/domain/use_cases/auth/get_on_boarding.dart';
+import 'package:ez_parking_app/domain/use_cases/auth/reset_password.dart';
 import 'package:ez_parking_app/domain/use_cases/auth/set_on_boarding.dart';
 import 'package:ez_parking_app/domain/use_cases/auth/signup.dart';
+import 'package:ez_parking_app/presentation/bloc/auth/reset_password/reset_password_cubit.dart';
 import 'package:ez_parking_app/presentation/bloc/auth/signup/signup_cubit.dart';
 import 'package:ez_parking_app/presentation/bloc/auth/welcome/welcome_cubit.dart';
 import 'package:get_it/get_it.dart';
@@ -17,12 +19,14 @@ import 'package:ez_parking_app/presentation/bloc/auth/login/login_cubit.dart';
 /// * WelcomeCubit
 /// * LoginCubit
 /// * SignupCubit
+/// * ResetPasswordCubit
 ///
 /// ### Casos de Uso
 /// * LoginWithEmailAndPassword
 /// * SetOnBoarding
 /// * GetOnBoarding
 /// * Signup
+/// * ResetPassword
 ///
 /// ### Repositorios
 /// * AuthRepository
@@ -36,11 +40,13 @@ void initAuthDependencies(GetIt sl) {
     ..registerFactory(() => WelcomeCubit(setOnBoarding: sl()))
     ..registerFactory(() => LoginCubit(loginWithEmailAndPassword: sl()))
     ..registerFactory(() => SignupCubit(signup: sl()))
+    ..registerFactory(() => ResetPasswordCubit(resetPasswordUC: sl()))
     // use cases
     ..registerLazySingleton(() => LoginWithEmailAndPassword(sl()))
     ..registerLazySingleton(() => SetOnBoarding(sl()))
     ..registerLazySingleton(() => GetOnBoarding(sl()))
     ..registerLazySingleton(() => Signup(sl()))
+    ..registerLazySingleton(() => ResetPassword(sl()))
     // Repository
     ..registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(
           remoteDataSource: sl(),

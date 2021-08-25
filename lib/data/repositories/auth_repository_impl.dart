@@ -4,6 +4,7 @@ import 'package:ez_parking_app/core/network/network_info.dart';
 import 'package:ez_parking_app/data/datasources/auth/auth_local_datasource.dart';
 import 'package:ez_parking_app/data/datasources/auth/auth_remote_datasource.dart';
 import 'package:ez_parking_app/core/errors/failure.dart';
+import 'package:ez_parking_app/domain/entities/auth/reset_password_response.dart';
 import 'package:ez_parking_app/domain/entities/auth/signup_success.dart';
 import 'package:ez_parking_app/domain/entities/auth/user_session.dart';
 import 'package:ez_parking_app/domain/repositories/auth_repository.dart';
@@ -53,6 +54,20 @@ class AuthRepositoryImpl extends AuthRepository {
         final signupSuccess =
             await remoteDataSource.signup(email: email, name: name, lastname: lastname, password: password);
         return Right(signupSuccess);
+      } on ServerException catch (serverException) {
+        return Left(ServerFailure(code: serverException.code, message: serverException.message));
+      }
+    } else {
+      return Left(internetFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, ResetPasswordResponse>> resetPassword({required String email}) async {
+    if (await networkInfo.hasConnection) {
+      try {
+        final resetPasswordResponse = await remoteDataSource.resetPassword(email: email);
+        return Right(resetPasswordResponse);
       } on ServerException catch (serverException) {
         return Left(ServerFailure(code: serverException.code, message: serverException.message));
       }

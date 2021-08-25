@@ -1,6 +1,7 @@
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:dartz/dartz.dart';
 import 'package:ez_parking_app/core/errors/failure.dart';
+import 'package:ez_parking_app/domain/entities/auth/reset_password_response.dart';
 import 'package:ez_parking_app/domain/entities/auth/signup_success.dart';
 import 'package:ez_parking_app/domain/entities/auth/user_session.dart';
 
@@ -21,4 +22,6 @@ abstract class AuthRepository {
     required String lastname,
     required String password,
   });
+  // Solicita un correo para poder reiniciar la contraseña
+  Future<Either<Failure, ResetPasswordResponse>> resetPassword({required String email});
 }

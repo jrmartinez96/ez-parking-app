@@ -64,10 +64,11 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-      child: _buildBody(),
-    ));
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+        child: _buildBody(),
+      ),
+    );
   }
 
   Widget _buildBody() {
@@ -147,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
             horizontalMargin: 0,
             customValidator: validatePassword,
           ),
-          _buildSignInButton(),
+          _buildResetPasswordButton(),
           SizedBox(height: MediaQuery.of(context).size.height * 0.1),
           PrimaryButton(onPressed: () => _onLogin(context), title: 'Iniciar Sesión'),
           const SizedBox(height: 10),
@@ -162,11 +163,11 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildSignInButton() {
+  Widget _buildResetPasswordButton() {
     return Container(
       alignment: Alignment.centerRight,
       child: TextButton(
-        onPressed: () {},
+        onPressed: () => Navigator.of(context).pushNamed('/reset_password'),
         child: Text(
           '¿Olvidaste tu contraseña? Recuperar.',
           style: Theme.of(context).textTheme.bodyText2,
