@@ -4,6 +4,7 @@ import 'package:ez_parking_app/core/network/network_info.dart';
 import 'package:ez_parking_app/data/datasources/auth/auth_local_datasource.dart';
 import 'package:ez_parking_app/data/datasources/auth/auth_remote_datasource.dart';
 import 'package:ez_parking_app/core/errors/failure.dart';
+import 'package:ez_parking_app/domain/entities/auth/reset_password_response.dart';
 import 'package:ez_parking_app/domain/entities/auth/signup_success.dart';
 import 'package:ez_parking_app/domain/entities/auth/user_session.dart';
 import 'package:ez_parking_app/domain/repositories/auth_repository.dart';
@@ -59,5 +60,11 @@ class AuthRepositoryImpl extends AuthRepository {
     } else {
       return Left(internetFailure());
     }
+  }
+
+  @override
+  Future<Either<Failure, ResetPasswordResponse>> resetPassword({required String email}) {
+    // TODO: implement resetPassword
+    throw UnimplementedError();
   }
 }

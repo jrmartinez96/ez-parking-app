@@ -1,4 +1,5 @@
 import 'package:ez_parking_app/domain/use_cases/auth/get_on_boarding.dart';
+import 'package:ez_parking_app/domain/use_cases/auth/reset_password.dart';
 import 'package:ez_parking_app/domain/use_cases/auth/set_on_boarding.dart';
 import 'package:ez_parking_app/domain/use_cases/auth/signup.dart';
 import 'package:ez_parking_app/presentation/bloc/auth/signup/signup_cubit.dart';
@@ -23,6 +24,7 @@ import 'package:ez_parking_app/presentation/bloc/auth/login/login_cubit.dart';
 /// * SetOnBoarding
 /// * GetOnBoarding
 /// * Signup
+/// * ResetPassword
 ///
 /// ### Repositorios
 /// * AuthRepository
@@ -41,6 +43,7 @@ void initAuthDependencies(GetIt sl) {
     ..registerLazySingleton(() => SetOnBoarding(sl()))
     ..registerLazySingleton(() => GetOnBoarding(sl()))
     ..registerLazySingleton(() => Signup(sl()))
+    ..registerLazySingleton(() => ResetPassword(sl()))
     // Repository
     ..registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(
           remoteDataSource: sl(),
