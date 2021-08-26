@@ -1,4 +1,3 @@
-import 'package:ez_parking_app/core/framework/colors.dart';
 import 'package:ez_parking_app/presentation/widgets/screen_header.dart';
 import 'package:flutter/material.dart';
 
