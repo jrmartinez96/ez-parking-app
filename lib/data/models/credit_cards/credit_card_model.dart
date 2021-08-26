@@ -25,6 +25,6 @@ class CreditCardModel extends CreditCard {
         number: json['number'] as String,
         holder: json['holder'] as String,
         expirationDate: json['expiration_date'] as String,
-        id: json['id'] as int,
+        id: json['id'] != null ? json['id'] as int : 0,
       );
 }
