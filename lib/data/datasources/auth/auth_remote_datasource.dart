@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:ez_parking_app/data/models/auth/refresh_token_model.dart';
 import 'package:ez_parking_app/data/models/auth/reset_password_response_model.dart';
 import 'package:ez_parking_app/data/models/auth/signup_success_model.dart';
 import 'package:http/http.dart' as http;
@@ -24,6 +25,8 @@ abstract class AuthRemoteDataSource {
   });
   // Solicita un correo para reiniciar la contraseña
   Future<ResetPasswordResponseModel> resetPassword({required String email});
+  // Solicita un nuevo token utilizando el refresh token
+  Future<RefreshTokenModel> refreshToken({required String refreshToken});
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -126,6 +129,43 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     if (response.statusCode == 200) {
       try {
         return resetPasswordResponseModelFromJson(utf8.decode(response.bodyBytes));
+      } catch (_, __) {
+        ServerErrorModel serverErrorModel;
+        try {
+          serverErrorModel = serverErrorModelFromJson(utf8.decode(response.bodyBytes));
+        } catch (_, __) {
+          throw ServerException(
+            'Intenta más tarde.',
+            response.statusCode,
+          );
+        }
+        throw ServerException(serverErrorModel.message);
+      }
+    } else {
+      ServerErrorModel serverErrorModel;
+      try {
+        serverErrorModel = serverErrorModelFromJson(utf8.decode(response.bodyBytes));
+      } on Exception catch (_, __) {
+        throw ServerException(
+          'Intenta más tarde.',
+          response.statusCode,
+        );
+      }
+      throw ServerException(
+        serverErrorModel.message,
+      );
+    }
+  }
+
+  @override
+  Future<RefreshTokenModel> refreshToken({required String refreshToken}) async {
+    final body = {'refresh': refreshToken};
+
+    final response = await _post(url: '$urlEndpoint/auth/token/refresh/', body: body);
+
+    if (response.statusCode == 200) {
+      try {
+        return refreshTokenModelFromJson(utf8.decode(response.bodyBytes));
       } catch (_, __) {
         ServerErrorModel serverErrorModel;
         try {

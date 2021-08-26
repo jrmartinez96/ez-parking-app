@@ -44,6 +44,7 @@ void initCreditCardsDependencies(GetIt sl) {
     ..registerLazySingleton<CreditCardsRepository>(() => CreditCardsRepositoryImpl(
           remoteDataSource: sl(),
           authLocalDataSource: sl(),
+          authRemoteDataSource: sl(),
           networkInfo: sl(),
         ))
     // Data sources

@@ -3,18 +3,22 @@ import 'package:ez_parking_app/core/errors/exceptions.dart';
 import 'package:ez_parking_app/core/network/network_info.dart';
 import 'package:ez_parking_app/data/datasources/auth/auth_local_datasource.dart';
 import 'package:ez_parking_app/core/errors/failure.dart';
+import 'package:ez_parking_app/data/datasources/auth/auth_remote_datasource.dart';
 import 'package:ez_parking_app/data/datasources/credit_cards/credit_cards_remote_datasource.dart';
+import 'package:ez_parking_app/data/models/auth/user_session_model.dart';
 import 'package:ez_parking_app/domain/entities/credit_cards/credit_card.dart';
 import 'package:ez_parking_app/domain/repositories/credit_cards_repository.dart';
 
 class CreditCardsRepositoryImpl extends CreditCardsRepository {
   CreditCardsRepositoryImpl({
     required this.remoteDataSource,
+    required this.authRemoteDataSource,
     required this.authLocalDataSource,
     required this.networkInfo,
   });
 
   final CreditCardsRemoteDataSource remoteDataSource;
+  final AuthRemoteDataSource authRemoteDataSource;
   final AuthLocalDataSource authLocalDataSource;
   final NetworkInfo networkInfo;
 
@@ -37,7 +41,15 @@ class CreditCardsRepositoryImpl extends CreditCardsRepository {
       } on ServerException catch (serverException) {
         return Left(ServerFailure(code: serverException.code, message: serverException.message));
       } on UnauthorizedException {
-        return const Left(UnauthorizedFailure());
+        try {
+          final refreshToken = await authLocalDataSource.getRefreshToken();
+          final newAccessToken = await authRemoteDataSource.refreshToken(refreshToken: refreshToken);
+          await authLocalDataSource
+              .storeUserToken(UserSessionModel(refresh: refreshToken, access: newAccessToken.access));
+          return createCreditCard(cardNumber: cardNumber, holder: holder, expirationDate: expirationDate);
+        } on ServerException {
+          return const Left(UnauthorizedFailure());
+        }
       }
     } else {
       return Left(internetFailure());
@@ -54,7 +66,15 @@ class CreditCardsRepositoryImpl extends CreditCardsRepository {
       } on ServerException catch (serverException) {
         return Left(ServerFailure(code: serverException.code, message: serverException.message));
       } on UnauthorizedException {
-        return const Left(UnauthorizedFailure());
+        try {
+          final refreshToken = await authLocalDataSource.getRefreshToken();
+          final newAccessToken = await authRemoteDataSource.refreshToken(refreshToken: refreshToken);
+          await authLocalDataSource
+              .storeUserToken(UserSessionModel(refresh: refreshToken, access: newAccessToken.access));
+          return deleteCreditCardById(id: id);
+        } on ServerException {
+          return const Left(UnauthorizedFailure());
+        }
       }
     } else {
       return Left(internetFailure());
@@ -71,7 +91,15 @@ class CreditCardsRepositoryImpl extends CreditCardsRepository {
       } on ServerException catch (serverException) {
         return Left(ServerFailure(code: serverException.code, message: serverException.message));
       } on UnauthorizedException {
-        return const Left(UnauthorizedFailure());
+        try {
+          final refreshToken = await authLocalDataSource.getRefreshToken();
+          final newAccessToken = await authRemoteDataSource.refreshToken(refreshToken: refreshToken);
+          await authLocalDataSource
+              .storeUserToken(UserSessionModel(refresh: refreshToken, access: newAccessToken.access));
+          return getCreditCardById(id: id);
+        } on ServerException {
+          return const Left(UnauthorizedFailure());
+        }
       }
     } else {
       return Left(internetFailure());
@@ -88,7 +116,15 @@ class CreditCardsRepositoryImpl extends CreditCardsRepository {
       } on ServerException catch (serverException) {
         return Left(ServerFailure(code: serverException.code, message: serverException.message));
       } on UnauthorizedException {
-        return const Left(UnauthorizedFailure());
+        try {
+          final refreshToken = await authLocalDataSource.getRefreshToken();
+          final newAccessToken = await authRemoteDataSource.refreshToken(refreshToken: refreshToken);
+          await authLocalDataSource
+              .storeUserToken(UserSessionModel(refresh: refreshToken, access: newAccessToken.access));
+          return getCreditCards();
+        } on ServerException {
+          return const Left(UnauthorizedFailure());
+        }
       }
     } else {
       return Left(internetFailure());
@@ -112,7 +148,15 @@ class CreditCardsRepositoryImpl extends CreditCardsRepository {
       } on ServerException catch (serverException) {
         return Left(ServerFailure(code: serverException.code, message: serverException.message));
       } on UnauthorizedException {
-        return const Left(UnauthorizedFailure());
+        try {
+          final refreshToken = await authLocalDataSource.getRefreshToken();
+          final newAccessToken = await authRemoteDataSource.refreshToken(refreshToken: refreshToken);
+          await authLocalDataSource
+              .storeUserToken(UserSessionModel(refresh: refreshToken, access: newAccessToken.access));
+          return updateCreditCardById(cardNumber: cardNumber, holder: holder, expirationDate: expirationDate, id: id);
+        } on ServerException {
+          return const Left(UnauthorizedFailure());
+        }
       }
     } else {
       return Left(internetFailure());
