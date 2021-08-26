@@ -80,7 +80,7 @@ class _CreditCardsScreenState extends State<CreditCardsScreen> {
               child: ListView(
                 children: [
                   const ScreenHeader(
-                    title: 'Tarjetas de crédito',
+                    title: 'Mis tarjetas',
                     textAlign: TextAlign.start,
                   ),
                   const SizedBox(height: 40),

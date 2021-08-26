@@ -14,6 +14,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: primary,
       appBar: AppBar(
         backgroundColor: primary,
         leading: IconButton(
@@ -26,8 +27,8 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.credit_card, size: 40, color: Colors.white),
-            onPressed: () => Navigator.of(context).pushNamed('/credit_cards'),
+            icon: const Icon(Icons.settings, size: 35, color: Colors.white),
+            onPressed: () => Navigator.of(context).pushNamed('/settings'),
           ),
         ],
         title: ClipRRect(
