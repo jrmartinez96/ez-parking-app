@@ -67,8 +67,11 @@ class _CreditCardsScreenState extends State<CreditCardsScreen> {
             appBar: AppBar(
               actions: [
                 IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.add),
+                  onPressed: _onCreateCreditCard,
+                  icon: const Icon(
+                    Icons.add,
+                    size: 30,
+                  ),
                 )
               ],
             ),
@@ -109,7 +112,18 @@ class _CreditCardsScreenState extends State<CreditCardsScreen> {
         title: creditCard.holder,
         description: '${creditCard.number}\n Exp. ${creditCard.expirationDate}',
         imagePath: 'assets/images/credit_cards.png',
+        onPressed: () {},
       );
     }).toList();
+  }
+
+  Future<void> _onCreateCreditCard() async {
+    final creditCard = await Navigator.of(context).pushNamed('/create_credit_card');
+
+    if (creditCard != null) {
+      setState(() {
+        _creditCards = [..._creditCards, creditCard as CreditCard];
+      });
+    }
   }
 }

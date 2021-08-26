@@ -48,6 +48,8 @@ dependencies:
   awesome_card: ^1.1.5
   # Libreria para renderizar archivos svg
   flutter_svg: ^0.22.0
+  # Libreria para formatear inputs
+  flutter_multi_formatter: ^2.3.3
 
 dev_dependencies:
   bloc_test: ^8.1.0
