@@ -44,6 +44,10 @@ dependencies:
   flutter_onboarding_slider: ^1.0.0
   # Libreria de shared preferences
   shared_preferences: ^2.0.6
+  # Libreria para UI de tarjeta de credito
+  awesome_card: ^1.1.5
+  # Libreria para renderizar archivos svg
+  flutter_svg: ^0.22.0
 
 dev_dependencies:
   bloc_test: ^8.1.0
@@ -62,3 +66,4 @@ flutter:
   generate: true
   assets:
     - assets/images/
+    - assets/icons/
