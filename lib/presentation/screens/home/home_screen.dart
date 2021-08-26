@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.credit_card, size: 40, color: Colors.white),
-            onPressed: () {},
+            onPressed: () => Navigator.of(context).pushNamed('/credit_cards'),
           ),
         ],
         title: ClipRRect(
