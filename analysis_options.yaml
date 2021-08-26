@@ -8,3 +8,4 @@ linter:
     sized_box_for_whitespace: false
     prefer_const_constructors_in_immutables: false
     sort_pub_dependencies: false
+    implicit_dynamic_parameter: false

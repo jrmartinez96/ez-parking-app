@@ -2,8 +2,11 @@ import 'dart:convert';
 
 import 'package:ez_parking_app/domain/entities/credit_cards/credit_card.dart';
 
-List<CreditCardModel> creditCardModelListFromJson(String str) => List<CreditCardModel>.from(
-    (json.decode(str) as List<Map<String, dynamic>>).map<CreditCardModel>((x) => CreditCardModel.fromJson(x)));
+// ignore: avoid_dynamic_calls
+List<CreditCardModel> creditCardModelListFromJson(String str) =>
+    List<Map<String, dynamic>>.from(json.decode(str) as List)
+        .map<CreditCardModel>((x) => CreditCardModel.fromJson(x))
+        .toList();
 
 CreditCardModel creditCardModelFromJson(String str) =>
     CreditCardModel.fromJson(json.decode(str) as Map<String, dynamic>);
