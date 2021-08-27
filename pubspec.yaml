@@ -50,6 +50,8 @@ dependencies:
   flutter_svg: ^0.22.0
   # Libreria para formatear inputs
   flutter_multi_formatter: ^2.3.3
+  # Libreria para mostrar alertas nativas
+  adaptive_dialog: ^1.1.0
 
 dev_dependencies:
   bloc_test: ^8.1.0

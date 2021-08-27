@@ -14,10 +14,11 @@ class UpdateCreditCardById {
     required String holder,
     required String expirationDate,
   }) async {
-    return creditCardsRepository.createCreditCard(
+    return creditCardsRepository.updateCreditCardById(
       cardNumber: cardNumber,
       holder: holder,
       expirationDate: expirationDate,
+      id: id,
     );
   }
 }

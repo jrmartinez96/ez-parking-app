@@ -110,9 +110,9 @@ class _CreditCardsScreenState extends State<CreditCardsScreen> {
     return _creditCards.map<Widget>((creditCard) {
       return MenuItemCard(
         title: creditCard.holder,
-        description: '${creditCard.number}\n Exp. ${creditCard.expirationDate}',
+        description: '${_obscureCreditCardNumber(creditCard.number)}\n Exp. ${creditCard.expirationDate}',
         imagePath: 'assets/images/credit_cards.png',
-        onPressed: () {},
+        onPressed: () => _onEditCreditCard(creditCard),
       );
     }).toList();
   }
@@ -125,5 +125,38 @@ class _CreditCardsScreenState extends State<CreditCardsScreen> {
         _creditCards = [..._creditCards, creditCard as CreditCard];
       });
     }
+  }
+
+  Future<void> _onEditCreditCard(CreditCard creditCard) async {
+    final creditCardResponse = await Navigator.of(context).pushNamed('/edit_credit_card', arguments: creditCard);
+
+    if (creditCardResponse != null) {
+      final creditCardObject = creditCardResponse as CreditCard;
+      if (creditCardObject.id == 0) {
+        final removeIndex = _creditCards.indexWhere((element) => element.id == creditCard.id);
+        _creditCards.removeAt(removeIndex);
+        setState(() {});
+      } else {
+        final updateIndex = _creditCards.indexWhere((element) => element.id == creditCard.id);
+        _creditCards[updateIndex] = creditCardObject;
+        setState(() {});
+      }
+    }
+  }
+
+  String _obscureCreditCardNumber(String cardNumber) {
+    var numberObscure = '';
+
+    for (var i = 0; i < cardNumber.length; i++) {
+      final character = cardNumber[i];
+
+      if (i > 4 && i < (cardNumber.length - 4) && character != ' ') {
+        numberObscure = '$numberObscure*';
+      } else {
+        numberObscure = '$numberObscure$character';
+      }
+    }
+
+    return numberObscure;
   }
 }

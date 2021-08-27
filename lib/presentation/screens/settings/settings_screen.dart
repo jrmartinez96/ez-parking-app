@@ -1,3 +1,4 @@
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:ez_parking_app/presentation/widgets/cards/menu_item_card.dart';
 import 'package:ez_parking_app/presentation/widgets/screen_header.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,23 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  final _storage = FlutterSecureStorage();
+  final _storage = const FlutterSecureStorage();
+
+  Future<void> onLogout() async {
+    final result = await showOkCancelAlertDialog(
+      context: context,
+      title: '¿Quieres cerrar sesión?',
+      okLabel: 'Si',
+      cancelLabel: 'Cancelar',
+      isDestructiveAction: true,
+    );
+
+    if (result == OkCancelResult.ok) {
+      await _storage.delete(key: 'ACCESS_TOKEN');
+      await _storage.delete(key: 'REFRESH_TOKEN');
+      await Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +36,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () async {
-              await _storage.delete(key: 'ACCESS_TOKEN');
-              await _storage.delete(key: 'REFRESH_TOKEN');
-              await Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
-            },
+            onPressed: onLogout,
             icon: const Icon(
               Icons.power_settings_new,
               size: 30,

@@ -1,10 +1,12 @@
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:awesome_card/credit_card.dart';
 import 'package:awesome_card/extra/card_type.dart';
 import 'package:awesome_card/style/card_background.dart';
 import 'package:ez_parking_app/core/errors/failure.dart';
 import 'package:ez_parking_app/core/framework/colors.dart';
 import 'package:ez_parking_app/dependency_injection/injection_container.dart';
-import 'package:ez_parking_app/presentation/bloc/credit_cards/create_credit_card/create_credit_card_cubit.dart';
+import 'package:ez_parking_app/domain/entities/credit_cards/credit_card.dart' as entities;
+import 'package:ez_parking_app/presentation/bloc/credit_cards/edit_credit_card/edit_credit_card_cubit.dart';
 import 'package:ez_parking_app/presentation/widgets/loading_circular_progress_indicator.dart';
 import 'package:ez_parking_app/presentation/widgets/primary_button.dart';
 import 'package:ez_parking_app/presentation/widgets/primary_textfield.dart';
@@ -16,14 +18,14 @@ import 'package:flutter_multi_formatter/formatters/credit_card_expiration_input_
 import 'package:flutter_multi_formatter/formatters/credit_card_number_input_formatter.dart';
 import 'package:ez_parking_app/core/utils/utils.dart' as utils;
 
-class CreateCreditCardScreen extends StatefulWidget {
-  CreateCreditCardScreen({Key? key}) : super(key: key);
+class EditCreditCardScreen extends StatefulWidget {
+  EditCreditCardScreen({Key? key}) : super(key: key);
 
   @override
-  _CreateCreditCardScreenState createState() => _CreateCreditCardScreenState();
+  _EditCreditCardScreenState createState() => _EditCreditCardScreenState();
 }
 
-class _CreateCreditCardScreenState extends State<CreateCreditCardScreen> {
+class _EditCreditCardScreenState extends State<EditCreditCardScreen> {
   // Controllers
   final _numberController = TextEditingController();
   final _holderController = TextEditingController();
@@ -33,12 +35,32 @@ class _CreateCreditCardScreenState extends State<CreateCreditCardScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _autovalidateForm = false;
 
-  void _onAddCreditCard(BuildContext context) {
+  // Card to edit
+  entities.CreditCard _cardToEdit = entities.CreditCard(expirationDate: '', number: '', holder: '', id: 0);
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, _onLoad);
+  }
+
+  void _onLoad() {
+    final creditCard = ModalRoute.of(context)!.settings.arguments as entities.CreditCard;
+    _numberController.text = creditCard.number;
+    _holderController.text = creditCard.holder;
+    _expDateController.text = creditCard.expirationDate;
+    setState(() {
+      _cardToEdit = creditCard;
+    });
+  }
+
+  void _onEditCreditCard(BuildContext context) {
     if (_formKey.currentState!.validate()) {
-      context.read<CreateCreditCardCubit>().createCreditCard(
+      context.read<EditCreditCardCubit>().updateCreditCard(
             cardNumber: _numberController.text,
             holder: _holderController.text,
             expirationDate: _expDateController.text,
+            id: _cardToEdit.id,
           );
     } else {
       setState(() {
@@ -47,35 +69,51 @@ class _CreateCreditCardScreenState extends State<CreateCreditCardScreen> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: GestureDetector(
-        onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-        child: _buildBody(),
-      ),
+  Future<void> _onDeleteCreditCard(BuildContext context) async {
+    final result = await showOkCancelAlertDialog(
+      context: context,
+      title: '¿Deseas eliminar esta tarjeta',
+      okLabel: 'Si',
+      cancelLabel: 'Cancelar',
+      isDestructiveAction: true,
     );
+
+    if (result == OkCancelResult.ok) {
+      await context.read<EditCreditCardCubit>().deleteCreditCard(id: _cardToEdit.id);
+    }
   }
 
-  Widget _buildBody() {
+  @override
+  Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => sl<CreateCreditCardCubit>(),
-      child: BlocConsumer<CreateCreditCardCubit, CreateCreditCardState>(
+      create: (_) => sl<EditCreditCardCubit>(),
+      child: BlocConsumer<EditCreditCardCubit, EditCreditCardState>(
         listener: (context, state) {
-          if (state is CreateCreditCardLoaded) {
+          if (state is EditCreditCardLoadedUpdate) {
             utils.showCustomAlert(
               context,
               img: 'assets/images/success.png',
               title: '¡Felicidades!',
-              message: 'Tu tarjeta ha sido agregada con éxito.',
+              message: 'Tu tarjeta ha sido actualizado con éxito.',
               barrierDismissible: false,
               onPressed: () {
                 Navigator.pop(context);
                 Navigator.pop(context, state.creditCard);
               },
             );
-          } else if (state is CreateCreditCardError) {
+          } else if (state is EditCreditCardLoadedDelete) {
+            utils.showCustomAlert(
+              context,
+              img: 'assets/images/success.png',
+              title: 'Tarjeta eliminada',
+              message: 'Tu tarjeta ha sido eliminada con éxito.',
+              barrierDismissible: false,
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pop(context, state.creditCard);
+              },
+            );
+          } else if (state is EditCreditCardError) {
             final failure = state.failure;
             if (failure is UnauthorizedFailure) {
               utils.showUnauthorizedAlert(context, state.failure.message);
@@ -104,26 +142,43 @@ class _CreateCreditCardScreenState extends State<CreateCreditCardScreen> {
           }
         },
         builder: (context, state) {
-          var form = <Widget>[];
-          if (state is CreateCreditCardLoading) {
-            form = [const LoadingCircularProgressIndicator()];
-          } else {
-            form = _buildForm(context);
-          }
-          return Form(
-            key: _formKey,
-            autovalidateMode: _autovalidateForm ? AutovalidateMode.always : AutovalidateMode.disabled,
-            child: ListView(
-              children: [
-                const ScreenHeader(title: 'Agregar tarjeta', textAlign: TextAlign.start, horizontalPadding: 20),
-                const SizedBox(height: 20),
-                _buildCard(),
-                const SizedBox(height: 40),
-                ...form,
+          return Scaffold(
+            appBar: AppBar(
+              actions: [
+                IconButton(
+                  onPressed: () => _onDeleteCreditCard(context),
+                  icon: const Icon(Icons.delete, size: 30),
+                ),
               ],
+            ),
+            body: GestureDetector(
+              onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+              child: _buildBody(context, state),
             ),
           );
         },
+      ),
+    );
+  }
+
+  Widget _buildBody(BuildContext context, EditCreditCardState state) {
+    var form = <Widget>[];
+    if (state is EditCreditCardLoadingUpdate || state is EditCreditCardLoadingDelete) {
+      form = [const LoadingCircularProgressIndicator()];
+    } else {
+      form = _buildForm(context);
+    }
+    return Form(
+      key: _formKey,
+      autovalidateMode: _autovalidateForm ? AutovalidateMode.always : AutovalidateMode.disabled,
+      child: ListView(
+        children: [
+          const ScreenHeader(title: 'Editar tarjeta', textAlign: TextAlign.start, horizontalPadding: 20),
+          const SizedBox(height: 20),
+          _buildCard(),
+          const SizedBox(height: 40),
+          ...form,
+        ],
       ),
     );
   }
@@ -200,10 +255,14 @@ class _CreateCreditCardScreenState extends State<CreateCreditCardScreen> {
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: PrimaryButton(
-          title: 'Agregar',
-          onPressed: () {
-            _onAddCreditCard(context);
-          },
+          title: 'Guardar',
+          onPressed: (_numberController.text != _cardToEdit.number ||
+                  _holderController.text != _cardToEdit.holder ||
+                  _expDateController.text != _cardToEdit.expirationDate)
+              ? () {
+                  _onEditCreditCard(context);
+                }
+              : null,
         ),
       )
     ];
