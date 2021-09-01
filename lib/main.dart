@@ -9,6 +9,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:ez_parking_app/domain/use_cases/auth/get_on_boarding.dart';
+import 'package:ez_parking_app/domain/use_cases/auth/get_refresh_token.dart';
 import 'package:flutter/widgets.dart';
 import 'package:bloc/bloc.dart';
 import 'package:ez_parking_app/app/app.dart';
@@ -30,9 +31,10 @@ void main() async {
 
   // SharedPreferences
   final onBoarding = isFirstLaunch();
+  final refreshToken = await isRefreshToken();
 
   runZonedGuarded(
-    () => runApp(App(onBoarding: onBoarding)),
+    () => runApp(App(onBoarding: onBoarding, isRefreshToken: refreshToken)),
     (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
   );
 }
@@ -41,4 +43,10 @@ void main() async {
 int isFirstLaunch() {
   final getOnBoarding = GetOnBoarding(sl());
   return getOnBoarding();
+}
+
+/// Regresa '' si no existe refresh token
+Future<bool> isRefreshToken() async {
+  final refreshToken = await GetRefreshToken(sl()).call();
+  return Future.value('' != refreshToken);
 }

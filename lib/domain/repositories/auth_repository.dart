@@ -9,6 +9,8 @@ abstract class AuthRepository {
   Future<void> setOnBoading();
   // Regresa el valor de onBoarding
   int getOnBoading();
+  // Regresa el valor del refresh token guardado
+  Future<String> getRefreshToken();
   // Realiza un login con correo electronico y password
   Future<Either<Failure, UserSession>> logInWithEmailAndPassword({
     required String email,

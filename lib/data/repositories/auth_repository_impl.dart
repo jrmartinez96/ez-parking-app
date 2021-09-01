@@ -76,4 +76,9 @@ class AuthRepositoryImpl extends AuthRepository {
       return Left(internetFailure());
     }
   }
+
+  @override
+  Future<String> getRefreshToken() async {
+    return localDataSource.getRefreshToken();
+  }
 }

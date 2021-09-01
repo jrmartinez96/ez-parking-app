@@ -49,7 +49,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
     if (token != null) {
       return Future.value(token);
     } else {
-      throw CacheException();
+      return Future.value('');
     }
   }
 
