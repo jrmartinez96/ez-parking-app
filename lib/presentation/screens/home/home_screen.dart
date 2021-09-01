@@ -2,6 +2,7 @@ import 'package:ez_parking_app/core/framework/colors.dart';
 import 'package:ez_parking_app/core/framework/decorations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:ez_parking_app/core/utils/utils.dart' as utils;
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -23,7 +24,14 @@ class _HomeScreenState extends State<HomeScreen> {
             size: 40,
             color: Colors.white,
           ),
-          onPressed: () {},
+          onPressed: () {
+            utils.showCustomAlert(
+              context,
+              img: 'assets/images/work_in_progress.png',
+              title: '¡Oh uh!',
+              message: 'Esta funcionalidad no se encuentra disponible aún.',
+            );
+          },
         ),
         actions: [
           IconButton(
@@ -45,7 +53,14 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
               margin: const EdgeInsets.all(20),
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  utils.showCustomAlert(
+                    context,
+                    img: 'assets/images/work_in_progress.png',
+                    title: '¡Oh uh!',
+                    message: 'Esta funcionalidad no se encuentra disponible aún.',
+                  );
+                },
                 customBorder: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
