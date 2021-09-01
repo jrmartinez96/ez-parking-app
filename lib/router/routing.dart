@@ -1,7 +1,11 @@
 import 'package:event_bus/event_bus.dart';
 import 'package:ez_parking_app/presentation/screens/auth/register_screen.dart';
 import 'package:ez_parking_app/presentation/screens/auth/reset_password_screen.dart';
+import 'package:ez_parking_app/presentation/screens/credit_cards/create_credit_card_screen.dart';
+import 'package:ez_parking_app/presentation/screens/credit_cards/credit_cards_screen.dart';
+import 'package:ez_parking_app/presentation/screens/credit_cards/edit_credit_card_screen.dart';
 import 'package:ez_parking_app/presentation/screens/home/home_screen.dart';
+import 'package:ez_parking_app/presentation/screens/settings/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:ez_parking_app/presentation/screens/auth/login_screen.dart';
 import 'package:ez_parking_app/presentation/screens/voucher/voucher_screen.dart';
@@ -15,6 +19,10 @@ Map<String, WidgetBuilder> getApplicationRoutes(EventBus eventBus) {
     '/register': (context) => const RegisterScreen(),
     '/reset_password': (context) => ResetPasswordScreen(),
     '/home': (context) => HomeScreen(),
+    '/settings': (context) => SettingsScreen(),
+    '/credit_cards': (context) => CreditCardsScreen(),
+    '/create_credit_card': (context) => CreateCreditCardScreen(),
+    '/edit_credit_card': (context) => EditCreditCardScreen(),
     '/voucher': (context) => const VoucherScreen(),
   };
 }

@@ -6,6 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 abstract class AuthLocalDataSource {
   Future<void> storeUserToken(UserSessionModel userSession);
   Future<String> getUserToken();
+  Future<void> storeRefreshToken(UserSessionModel userSession);
+  Future<String> getRefreshToken();
   Future<void> setOnBoarding();
   int getOnBoarding();
 }
@@ -18,12 +20,12 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
 
   @override
   Future<void> storeUserToken(UserSessionModel userSession) {
-    return secureStorage.write(key: 'USER_TOKEN', value: userSession.access);
+    return secureStorage.write(key: 'ACCESS_TOKEN', value: userSession.access);
   }
 
   @override
   Future<String> getUserToken() async {
-    final token = await secureStorage.read(key: 'USER_TOKEN');
+    final token = await secureStorage.read(key: 'ACCESS_TOKEN');
     if (token != null) {
       return Future.value(token);
     } else {
@@ -39,5 +41,20 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   @override
   int getOnBoarding() {
     return sharedPreferences.getInt('onBoarding') ?? 0;
+  }
+
+  @override
+  Future<String> getRefreshToken() async {
+    final token = await secureStorage.read(key: 'REFRESH_TOKEN');
+    if (token != null) {
+      return Future.value(token);
+    } else {
+      throw CacheException();
+    }
+  }
+
+  @override
+  Future<void> storeRefreshToken(UserSessionModel userSession) {
+    return secureStorage.write(key: 'REFRESH_TOKEN', value: userSession.refresh);
   }
 }

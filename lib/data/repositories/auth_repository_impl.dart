@@ -37,6 +37,7 @@ class AuthRepositoryImpl extends AuthRepository {
       try {
         final userSession = await remoteDataSource.loginWithEmailAndPassword(email: email, password: password);
         await localDataSource.storeUserToken(userSession);
+        await localDataSource.storeRefreshToken(userSession);
         return Right(userSession);
       } on ServerException catch (serverException) {
         return Left(ServerFailure(code: serverException.code, message: serverException.message));

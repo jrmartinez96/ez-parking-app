@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:ez_parking_app/core/framework/colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_onboarding_slider/flutter_onboarding_slider.dart';
+import 'package:flutter_svg/svg.dart';
 
 class WelcomeScreen extends StatefulWidget {
   WelcomeScreen({Key? key}) : super(key: key);
@@ -62,11 +63,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         description: 'Una nueva manera para pagar tu parqueo.',
         imagePath: 'assets/images/company_logo.png',
       ),
-      _buildPageContent(
-        title: 'Tap-on-phone',
+      _buildPageContentSvg(
+        title: 'Tap on phone',
         description: 'Podras entrar, pagar, y salir de un centro comercial con un solo tap.',
-        iconData: Icons.nfc,
-        imagePath: 'assets/images/tap_on_phone.png',
+        svgPath: 'assets/icons/tap_on_phone.svg',
       ),
       _buildPageContent(
         title: 'Tarjetas de crédito',
@@ -107,6 +107,40 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     size: 200,
                     color: primary,
                   ),
+          ),
+        ),
+        const SizedBox(height: 40),
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: HORIZONTAL_MARGIN),
+          child: Text(
+            description,
+            style: Theme.of(context).textTheme.headline3,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPageContentSvg({
+    required String title,
+    required String svgPath,
+    required String description,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 40),
+        ScreenHeader(
+          title: title,
+          horizontalPadding: HORIZONTAL_MARGIN,
+        ),
+        const SizedBox(height: 80),
+        Align(
+          child: SvgPicture.asset(
+            svgPath,
+            semanticsLabel: 'Tap on phone',
+            height: MediaQuery.of(context).size.width * 0.5,
           ),
         ),
         const SizedBox(height: 40),

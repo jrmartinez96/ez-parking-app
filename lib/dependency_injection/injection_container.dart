@@ -1,3 +1,4 @@
+import 'package:ez_parking_app/dependency_injection/credit_cards_dependencies.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
@@ -13,6 +14,7 @@ final sl = GetIt.instance;
 /// Inicializa la inyeccion de dependencias para el app en general.
 Future<void> init() async {
   initAuthDependencies(sl);
+  initCreditCardsDependencies(sl);
 
   //! Core
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));

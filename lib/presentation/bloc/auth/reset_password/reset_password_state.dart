@@ -14,7 +14,7 @@ class ResetPasswordLoading extends ResetPasswordState {}
 class ResetPasswordLoaded extends ResetPasswordState {}
 
 class ResetPasswordError extends ResetPasswordState {
-  const ResetPasswordError({required this.message, required this.failure});
+  ResetPasswordError({required this.message, required this.failure});
 
   final String message;
   final Failure failure;

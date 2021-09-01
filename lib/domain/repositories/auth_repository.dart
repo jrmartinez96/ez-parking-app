@@ -1,4 +1,3 @@
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:dartz/dartz.dart';
 import 'package:ez_parking_app/core/errors/failure.dart';
 import 'package:ez_parking_app/domain/entities/auth/reset_password_response.dart';

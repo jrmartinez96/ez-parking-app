@@ -5,6 +5,7 @@ const secondary = Color(0xFFDA291C);
 const terciary = Color(0xFF1c5c8a);
 const greyColor = Color(0xFF77777A);
 const lightGreyColor = Color(0xFFB6B6BA);
+const primaryLight = Color(0xFF447496);
 const primaryTextColor = Color(0xFF4E5053);
 const secondaryTextColor = Color(0xFFB9B9B9);
 const contextColor = Color(0xFF707070);
