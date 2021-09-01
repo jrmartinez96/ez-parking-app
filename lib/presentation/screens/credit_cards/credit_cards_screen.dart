@@ -1,4 +1,5 @@
 import 'package:ez_parking_app/core/errors/failure.dart';
+import 'package:ez_parking_app/core/framework/colors.dart';
 import 'package:ez_parking_app/dependency_injection/injection_container.dart';
 import 'package:ez_parking_app/domain/entities/credit_cards/credit_card.dart';
 import 'package:ez_parking_app/presentation/bloc/credit_cards/credit_cards/credit_cards_cubit.dart';
@@ -8,6 +9,7 @@ import 'package:ez_parking_app/presentation/widgets/screen_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ez_parking_app/core/utils/utils.dart' as utils;
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class CreditCardsScreen extends StatefulWidget {
   CreditCardsScreen({Key? key}) : super(key: key);
@@ -17,7 +19,13 @@ class CreditCardsScreen extends StatefulWidget {
 }
 
 class _CreditCardsScreenState extends State<CreditCardsScreen> {
+  final _refreshController = RefreshController();
   List<CreditCard> _creditCards = [];
+
+  void _onRefresh(BuildContext context) {
+    _refreshController.refreshCompleted();
+    context.read<CreditCardsCubit>().getCreditCards();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,9 +83,12 @@ class _CreditCardsScreenState extends State<CreditCardsScreen> {
                 )
               ],
             ),
-            body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+            body: SmartRefresher(
+              controller: _refreshController,
+              header: WaterDropHeader(complete: Container(), waterDropColor: primary),
+              onRefresh: () => _onRefresh(context),
               child: ListView(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 children: [
                   const ScreenHeader(
                     title: 'Mis tarjetas',

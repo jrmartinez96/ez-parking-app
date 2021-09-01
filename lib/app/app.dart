@@ -20,7 +20,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final eventBus = EventBus(sync: true);
-    var initialRoute = 'welcome';
+    var initialRoute = '/welcome';
     if (onBoarding == 1) {
       if (isRefreshToken) {
         initialRoute = '/home';

@@ -2,8 +2,8 @@
     package="com.example.ez_parking_app">
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
    <application
-        android:label="ez_parking_app"
-        android:icon="@mipmap/ic_launcher"
+        android:label="EZ Parking"
+        android:icon="@mipmap/launcher_icon"
         android:requestLegacyExternalStorage="true">
         <activity
             android:name=".MainActivity"

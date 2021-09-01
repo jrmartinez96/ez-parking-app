@@ -143,12 +143,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
         controller: _nameController,
         hintText: 'Nombre',
         required: true,
+        textCapitalization: TextCapitalization.words,
       ),
       const SizedBox(height: 10),
       PrimaryTextfield(
         controller: _lastNameController,
         hintText: 'Apellido',
         required: true,
+        textCapitalization: TextCapitalization.words,
       ),
       const SizedBox(height: 10),
       PrimaryTextfield(

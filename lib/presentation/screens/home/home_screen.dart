@@ -18,6 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: primary,
       appBar: AppBar(
         backgroundColor: primary,
+        centerTitle: true,
         leading: IconButton(
           icon: const Icon(
             Icons.history,

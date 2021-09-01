@@ -108,18 +108,16 @@ class _LoginScreenState extends State<LoginScreen> {
     return Stack(
       children: [
         if (!_isKeyboardVisible) _buildBottom() else Container(),
-        Padding(
+        ListView(
           padding: const EdgeInsets.symmetric(horizontal: HORIZONTAL_MARGIN),
-          child: ListView(
-            children: [
-              SizedBox(height: MediaQuery.of(context).size.height * (_isKeyboardVisible ? 0.09 : 0.17)),
-              const ScreenHeader(
-                title: 'Iniciar Sesión',
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-              form
-            ],
-          ),
+          children: [
+            SizedBox(height: MediaQuery.of(context).size.height * (_isKeyboardVisible ? 0.09 : 0.17)),
+            const ScreenHeader(
+              title: 'Iniciar Sesión',
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+            form
+          ],
         ),
       ],
     );

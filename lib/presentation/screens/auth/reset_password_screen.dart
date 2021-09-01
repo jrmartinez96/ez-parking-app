@@ -93,43 +93,41 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   }
 
   Widget _buildBody(BuildContext context, ResetPasswordState state) {
-    return Padding(
+    return ListView(
       padding: const EdgeInsets.symmetric(horizontal: HORIZONTAL_MARGIN),
-      child: ListView(
-        children: [
-          const ScreenHeader(
-            title: 'Olvidé mi contraseña',
-            textAlign: TextAlign.start,
+      children: [
+        const ScreenHeader(
+          title: 'Olvidé mi contraseña',
+          textAlign: TextAlign.start,
+        ),
+        const ScreenDescription(description: 'Te enviaremos un correo para que puedas reiniciar tu contraseña.'),
+        Form(
+          key: _formKey,
+          autovalidateMode: _autovalidate ? AutovalidateMode.always : AutovalidateMode.disabled,
+          child: PrimaryTextfield(
+            controller: _emailController,
+            hintText: 'Correo electrónico',
+            keyboardType: TextInputType.emailAddress,
+            customValidator: validateEmail,
+            horizontalMargin: 0,
           ),
-          const ScreenDescription(description: 'Te enviaremos un correo para que puedas reiniciar tu contraseña.'),
-          Form(
-            key: _formKey,
-            autovalidateMode: _autovalidate ? AutovalidateMode.always : AutovalidateMode.disabled,
-            child: PrimaryTextfield(
-              controller: _emailController,
-              hintText: 'Correo electrónico',
-              keyboardType: TextInputType.emailAddress,
-              customValidator: validateEmail,
-              horizontalMargin: 0,
-            ),
+        ),
+        const SizedBox(height: 40),
+        if (state is ResetPasswordLoading)
+          Column(
+            children: const [
+              SizedBox(height: 40),
+              LoadingCircularProgressIndicator(),
+            ],
+          )
+        else
+          PrimaryButton(
+            title: 'Enviar correo',
+            onPressed: () {
+              _onResetPassword(context);
+            },
           ),
-          const SizedBox(height: 40),
-          if (state is ResetPasswordLoading)
-            Column(
-              children: const [
-                SizedBox(height: 40),
-                LoadingCircularProgressIndicator(),
-              ],
-            )
-          else
-            PrimaryButton(
-              title: 'Enviar correo',
-              onPressed: () {
-                _onResetPassword(context);
-              },
-            ),
-        ],
-      ),
+      ],
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
+import 'package:ez_parking_app/core/framework/constants.dart';
 import 'package:ez_parking_app/presentation/widgets/cards/menu_item_card.dart';
 import 'package:ez_parking_app/presentation/widgets/screen_header.dart';
 import 'package:flutter/material.dart';
@@ -44,23 +45,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
           )
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: ListView(
-          children: [
-            const ScreenHeader(
-              title: 'Ajustes',
-              textAlign: TextAlign.start,
-            ),
-            const SizedBox(height: 20),
-            MenuItemCard(
-              title: 'Mis Tarjetas',
-              description: 'Agrega, modifica y elimina tus tarjetas',
-              onPressed: () => Navigator.of(context).pushNamed('/credit_cards'),
-              imagePath: 'assets/images/credit_cards.png',
-            )
-          ],
-        ),
+      body: ListView(
+        padding: const EdgeInsets.symmetric(horizontal: HORIZONTAL_MARGIN),
+        children: [
+          const ScreenHeader(
+            title: 'Ajustes',
+            textAlign: TextAlign.start,
+          ),
+          const SizedBox(height: 20),
+          MenuItemCard(
+            title: 'Mis Tarjetas',
+            description: 'Agrega, modifica y elimina tus tarjetas',
+            onPressed: () => Navigator.of(context).pushNamed('/credit_cards'),
+            imagePath: 'assets/images/credit_cards.png',
+          )
+        ],
       ),
     );
   }
