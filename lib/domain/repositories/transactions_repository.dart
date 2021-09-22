@@ -7,4 +7,6 @@ abstract class TransactionsRepository {
   Future<Either<Failure, TransactionQuery>> getTransactions();
   // Solicita un listado de transacciones a partir de una url
   Future<Either<Failure, TransactionQuery>> getTransactionsByUrl({required String url});
+  // Solicita entrar a un centro comercial
+  Future<Either<Failure, Transaction>> enterOrExitMall({required String tagId});
 }

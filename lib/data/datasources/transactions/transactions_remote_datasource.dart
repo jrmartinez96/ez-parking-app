@@ -14,6 +14,8 @@ abstract class TransactionsRemoteDataSource {
   });
   // Solicita las transacciones de un usuario por medio de una url
   Future<TransactionQueryModel> getTransactionsByUrl({required String authToken, required String url});
+  // Solicita abrir una talanquera, ya sea para entrar o salir
+  Future<TransactionModel> enterOrExitMall({required String authToken, required String tagId});
 }
 
 class TransactionsRemoteDataSourceImpl implements TransactionsRemoteDataSource {
@@ -73,6 +75,49 @@ class TransactionsRemoteDataSourceImpl implements TransactionsRemoteDataSource {
     if (response.statusCode == 200) {
       try {
         return transactionQueryFromJson(utf8.decode(response.bodyBytes));
+      } catch (_, __) {
+        ServerErrorModel serverErrorModel;
+        try {
+          serverErrorModel = serverErrorModelFromJson(utf8.decode(response.bodyBytes));
+        } catch (_, __) {
+          throw ServerException(
+            'Intenta más tarde.',
+            response.statusCode,
+          );
+        }
+        throw ServerException(serverErrorModel.message);
+      }
+    } else if (response.statusCode == 401) {
+      throw UnauthorizedException();
+    } else {
+      ServerErrorModel serverErrorModel;
+      try {
+        serverErrorModel = serverErrorModelFromJson(utf8.decode(response.bodyBytes));
+      } on Exception catch (_, __) {
+        throw ServerException(
+          'Intenta más tarde.',
+          response.statusCode,
+        );
+      }
+      throw ServerException(
+        serverErrorModel.message,
+      );
+    }
+  }
+
+  @override
+  Future<TransactionModel> enterOrExitMall({required String authToken, required String tagId}) async {
+    final response = await _postWithAuth(
+      url: '$urlEndpoint/transactions/open-mall-gate/',
+      authToken: authToken,
+      body: <String, dynamic>{
+        'tagId': tagId,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      try {
+        return TransactionModel.fromJson(jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>);
       } catch (_, __) {
         ServerErrorModel serverErrorModel;
         try {

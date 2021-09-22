@@ -71,4 +71,29 @@ class TransactionsRepositoryImpl extends TransactionsRepository {
       return Left(internetFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, Transaction>> enterOrExitMall({required String tagId}) async {
+    if (await networkInfo.hasConnection) {
+      try {
+        final authToken = await authLocalDataSource.getUserToken();
+        final transaction = await remoteDataSource.enterOrExitMall(authToken: authToken, tagId: tagId);
+        return Right(transaction);
+      } on ServerException catch (serverException) {
+        return Left(ServerFailure(code: serverException.code, message: serverException.message));
+      } on UnauthorizedException {
+        try {
+          final refreshToken = await authLocalDataSource.getRefreshToken();
+          final newAccessToken = await authRemoteDataSource.refreshToken(refreshToken: refreshToken);
+          await authLocalDataSource
+              .storeUserToken(UserSessionModel(refresh: refreshToken, access: newAccessToken.access));
+          return enterOrExitMall(tagId: tagId);
+        } on ServerException {
+          return const Left(UnauthorizedFailure());
+        }
+      }
+    } else {
+      return Left(internetFailure());
+    }
+  }
 }
