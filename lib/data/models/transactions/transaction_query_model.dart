@@ -30,16 +30,16 @@ class TransactionModel extends Transaction {
     required String id,
     required MallModel mall,
     required DateTime enterTime,
-    required DateTime exitTime,
-    required double amount,
+    required DateTime? exitTime,
+    required double? amount,
   }) : super(id: id, mall: mall, enterTime: enterTime, exitTime: exitTime, amount: amount);
 
   factory TransactionModel.fromJson(Map<String, dynamic> json) => TransactionModel(
         id: json['id'] as String,
         mall: MallModel.fromJson(json['mall'] as Map<String, dynamic>),
         enterTime: DateTime.parse(json['enterTime'] as String),
-        exitTime: DateTime.parse(json['exitTime'] as String),
-        amount: json['amount'] as double,
+        exitTime: json['exitTime'] == null ? null : DateTime.parse(json['exitTime'] as String),
+        amount: json['amount'] as double?,
       );
 }
 

@@ -6,6 +6,7 @@ import 'package:ez_parking_app/presentation/screens/credit_cards/credit_cards_sc
 import 'package:ez_parking_app/presentation/screens/credit_cards/edit_credit_card_screen.dart';
 import 'package:ez_parking_app/presentation/screens/home/home_screen.dart';
 import 'package:ez_parking_app/presentation/screens/settings/settings_screen.dart';
+import 'package:ez_parking_app/presentation/screens/transactions/transactions_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:ez_parking_app/presentation/screens/auth/login_screen.dart';
 import 'package:ez_parking_app/presentation/screens/voucher/voucher_screen.dart';
@@ -23,6 +24,7 @@ Map<String, WidgetBuilder> getApplicationRoutes(EventBus eventBus) {
     '/credit_cards': (context) => CreditCardsScreen(),
     '/create_credit_card': (context) => CreateCreditCardScreen(),
     '/edit_credit_card': (context) => EditCreditCardScreen(),
+    '/transactions': (context) => TransactionsScreen(),
     '/voucher': (context) => const VoucherScreen(),
   };
 }

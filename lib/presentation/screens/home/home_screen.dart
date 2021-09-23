@@ -26,12 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
             color: Colors.white,
           ),
           onPressed: () {
-            utils.showCustomAlert(
-              context,
-              img: 'assets/images/work_in_progress.png',
-              title: '¡Oh uh!',
-              message: 'Esta funcionalidad no se encuentra disponible aún.',
-            );
+            Navigator.of(context).pushNamed('/transactions');
           },
         ),
         actions: [
