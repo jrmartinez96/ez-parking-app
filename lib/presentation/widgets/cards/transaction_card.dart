@@ -76,7 +76,7 @@ class TransactionCard extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.symmetric(vertical: 5),
                   child: Text(
-                    'Q. ${transaction.amount}',
+                    'Q. ${transaction.amount!.toStringAsFixed(2)}',
                     style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                 )
@@ -91,7 +91,9 @@ class TransactionCard extends StatelessWidget {
 
   String _buildDateString(DateTime date) {
     final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
     final difference = now.difference(date);
+    final diffToday = today.difference(date);
 
     final time = '${date.hour}:${date.minute < 10 ? '0${date.minute}' : date.minute}';
     final day = '${date.day < 10 ? '0${date.day}' : date.day}';
@@ -104,9 +106,9 @@ class TransactionCard extends StatelessWidget {
       return 'Hace ${difference.inMinutes} minuto';
     } else if (difference.inMinutes < 60) {
       return 'Hace ${difference.inMinutes} minutos';
-    } else if (difference.inHours < 24) {
-      return 'Hace ${difference.inHours} horas';
-    } else if (difference.inHours < 48) {
+    } else if (diffToday.inHours < 0) {
+      return 'hola';
+    } else if (diffToday.inHours < 24) {
       return 'Ayer a las $time';
     }
 

@@ -37,8 +37,8 @@ class TransactionModel extends Transaction {
   factory TransactionModel.fromJson(Map<String, dynamic> json) => TransactionModel(
         id: json['id'] as String,
         mall: MallModel.fromJson(json['mall'] as Map<String, dynamic>),
-        enterTime: DateTime.parse(json['enterTime'] as String),
-        exitTime: json['exitTime'] == null ? null : DateTime.parse(json['exitTime'] as String),
+        enterTime: DateTime.parse(json['enterTime'] as String).toLocal(),
+        exitTime: json['exitTime'] == null ? null : DateTime.parse(json['exitTime'] as String).toLocal(),
         amount: json['amount'] as double?,
       );
 }

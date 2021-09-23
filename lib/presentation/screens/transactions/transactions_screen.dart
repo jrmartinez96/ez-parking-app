@@ -1,4 +1,5 @@
 import 'package:ez_parking_app/core/errors/failure.dart';
+import 'package:ez_parking_app/core/framework/colors.dart';
 import 'package:ez_parking_app/core/framework/constants.dart';
 import 'package:ez_parking_app/dependency_injection/injection_container.dart';
 import 'package:ez_parking_app/domain/entities/transactions/transaction_query.dart';
@@ -9,6 +10,7 @@ import 'package:ez_parking_app/presentation/widgets/screen_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ez_parking_app/core/utils/utils.dart' as utils;
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class TransactionsScreen extends StatefulWidget {
   TransactionsScreen({Key? key}) : super(key: key);
@@ -18,6 +20,7 @@ class TransactionsScreen extends StatefulWidget {
 }
 
 class _TransactionsScreenState extends State<TransactionsScreen> {
+  final _refreshController = RefreshController();
   ScrollController _transactionsScrollController = ScrollController();
   String? _nextPage;
   late BuildContext _providerContext;
@@ -44,6 +47,11 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
     }
   }
 
+  Future<void> _onRefresh(BuildContext context) async {
+    await context.read<TransactionsCubit>().getTransactions();
+    _refreshController.refreshCompleted();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +69,11 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
           _providerState = state;
           if (state is TransactionsLoaded) {
             _nextPage = state.transactionQuery.next;
-            _transactions = [..._transactions, ...state.transactionQuery.transactions];
+            if (state.transactionQuery.previous == null) {
+              _transactions = state.transactionQuery.transactions;
+            } else {
+              _transactions = [..._transactions, ...state.transactionQuery.transactions];
+            }
           } else if (state is TransactionsError) {
             final failure = state.failure;
             if (failure is UnauthorizedFailure) {
@@ -92,18 +104,23 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
           setState(() {});
         },
         builder: (context, state) {
-          return ListView(
-            controller: _transactionsScrollController,
-            padding: const EdgeInsets.symmetric(horizontal: HORIZONTAL_MARGIN),
-            children: [
-              const ScreenHeader(
-                title: 'Transacciones',
-                textAlign: TextAlign.start,
-              ),
-              const SizedBox(height: 15),
-              ..._buildTransactions(state),
-              const SizedBox(height: 15)
-            ],
+          return SmartRefresher(
+            controller: _refreshController,
+            header: WaterDropHeader(complete: Container(), waterDropColor: primary),
+            onRefresh: () => _onRefresh(context),
+            child: ListView(
+              controller: _transactionsScrollController,
+              padding: const EdgeInsets.symmetric(horizontal: HORIZONTAL_MARGIN),
+              children: [
+                const ScreenHeader(
+                  title: 'Transacciones',
+                  textAlign: TextAlign.start,
+                ),
+                const SizedBox(height: 15),
+                ..._buildTransactions(state),
+                const SizedBox(height: 15)
+              ],
+            ),
           );
         },
       ),
