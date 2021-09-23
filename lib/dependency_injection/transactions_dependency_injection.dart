@@ -3,6 +3,7 @@ import 'package:ez_parking_app/data/repositories/transactions_repository_impl.da
 import 'package:ez_parking_app/domain/repositories/transactions_repository.dart';
 import 'package:ez_parking_app/domain/use_cases/transactions/enter_or_exit_mall.dart';
 import 'package:ez_parking_app/domain/use_cases/transactions/get_transactions.dart';
+import 'package:ez_parking_app/presentation/bloc/home/home/home_cubit.dart';
 import 'package:ez_parking_app/presentation/bloc/transactions/transactions/transactions_cubit.dart';
 import 'package:get_it/get_it.dart';
 
@@ -10,6 +11,7 @@ import 'package:get_it/get_it.dart';
 ///
 /// ### BLoCs
 /// * TransactionsCubit
+/// * HomeCubit
 ///
 /// ### Casos de Uso
 /// * GetTransactions
@@ -24,6 +26,7 @@ void initTransactionsDependencies(GetIt sl) {
   sl
     // BLoCs
     ..registerFactory(() => TransactionsCubit(getTransactionsUC: sl()))
+    ..registerFactory(() => HomeCubit(enterOrExitMallUC: sl()))
     // use cases
     ..registerLazySingleton(() => GetTransactions(sl()))
     ..registerLazySingleton(() => EnterOrExitMall(sl()))

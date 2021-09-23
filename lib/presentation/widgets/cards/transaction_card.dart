@@ -106,8 +106,10 @@ class TransactionCard extends StatelessWidget {
       return 'Hace ${difference.inMinutes} minuto';
     } else if (difference.inMinutes < 60) {
       return 'Hace ${difference.inMinutes} minutos';
+    } else if (difference.inHours == 1) {
+      return 'Hace ${difference.inHours} hora';
     } else if (diffToday.inHours < 0) {
-      return 'hola';
+      return 'Hace ${difference.inHours} horas';
     } else if (diffToday.inHours < 24) {
       return 'Ayer a las $time';
     }
