@@ -14,7 +14,9 @@ import 'package:get_it/get_it.dart';
 /// Inyecta las dependencias relacionadas con las features de autenticación del app.
 ///
 /// ### BLoCs
-/// *
+/// * CreditCardsCubit
+/// * CreateCreditCardCubit
+/// * EditCreditCardCubit
 ///
 /// ### Casos de Uso
 /// * CreateCreditCard

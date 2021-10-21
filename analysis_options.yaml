@@ -9,3 +9,4 @@ linter:
     prefer_const_constructors_in_immutables: false
     sort_pub_dependencies: false
     implicit_dynamic_parameter: false
+    implicit_dynamic_map_literal: false

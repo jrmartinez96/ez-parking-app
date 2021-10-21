@@ -54,6 +54,10 @@ dependencies:
   adaptive_dialog: ^1.1.0
   # Pull to refresh
   pull_to_refresh: ^2.0.0
+  # Libreria para NFC
+  nfc_manager: ^3.1.0
+  # Libreria para tutorial overlay
+  tutorial: ^1.0.8
 
 dev_dependencies:
   bloc_test: ^8.1.0

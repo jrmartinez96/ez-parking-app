@@ -1,4 +1,5 @@
 import 'package:ez_parking_app/dependency_injection/credit_cards_dependencies.dart';
+import 'package:ez_parking_app/dependency_injection/transactions_dependency_injection.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
@@ -15,6 +16,7 @@ final sl = GetIt.instance;
 Future<void> init() async {
   initAuthDependencies(sl);
   initCreditCardsDependencies(sl);
+  initTransactionsDependencies(sl);
 
   //! Core
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
